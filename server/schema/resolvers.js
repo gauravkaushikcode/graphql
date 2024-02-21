@@ -1,5 +1,5 @@
 const _ = require("lodash");
-const { UserList } = require("../FakeData");
+const { UserList, MovieList } = require("../FakeData");
 const resolvers = {
   Query: {
     users: () => {
@@ -10,6 +10,18 @@ const resolvers = {
     },
     friends: (parent, { id }) => {
       return _.find(UserList, { id: Number(id) })?.friends;
+    },
+    movies: () => {
+      return MovieList;
+    },
+    movie: (parent, args) => {
+      const name = args.name;
+      return _.find(MovieList, { name });
+    },
+  },
+  User: {
+    favoriteMovies: () => {
+      return _.filter(MovieList, (movie) => movie.yearOfPublication >= 2009);
     },
   },
 };
